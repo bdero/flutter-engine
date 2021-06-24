@@ -94,7 +94,7 @@ std::unique_ptr<ImageGenerator> EsotericImageGenerator::MakeFromData(
     return nullptr;
 
   // const char* input = "julia;-0.73;0.45;0.46;-0.22;0.76";
-  char* data = static_cast<char*>(buffer.get()->writable_data());
+  const char* data = static_cast<const char*>(buffer.get()->data());
   if (strncmp(data, "julia;", 6) != 0)
     return nullptr;
 

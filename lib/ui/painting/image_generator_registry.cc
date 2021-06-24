@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include "flutter/fml/trace_event.h"
+#include "flutter/lib/ui/painting/esoteric_image_generator.h"
 #include "flutter/lib/ui/painting/image_generator_registry.h"
 #include "third_party/skia/include/codec/SkCodec.h"
 #include "third_party/skia/include/core/SkImageGenerator.h"
@@ -23,6 +24,11 @@ ImageGeneratorRegistry::ImageGeneratorRegistry() : weak_factory_(this) {
         return BuiltinSkiaCodecImageGenerator::MakeFromData(buffer);
       },
       0);
+  AddFactory(
+      [](sk_sp<SkData> buffer) {
+        return EsotericImageGenerator::MakeFromData(buffer);
+      },
+      1);
 
   // todo(bdero): https://github.com/flutter/flutter/issues/82603
 #ifdef OS_MACOSX

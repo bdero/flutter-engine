@@ -30,6 +30,8 @@ source_set("ui") {
     "painting/color_filter.h",
     "painting/engine_layer.cc",
     "painting/engine_layer.h",
+    "painting/esoteric_image_generator.cc",
+    "painting/esoteric_image_generator.h",
     "painting/gradient.cc",
     "painting/gradient.h",
     "painting/image.cc",

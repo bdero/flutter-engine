@@ -145,6 +145,8 @@ AndroidShellHolder::AndroidShellHolder(
         },
         -1);
     FML_DLOG(INFO) << "Registered SDK image decoder (API level 28+)";
+
+
   }
 
   platform_view_ = weak_platform_view;

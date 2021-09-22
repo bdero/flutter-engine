@@ -48,6 +48,13 @@ FLUTTER_DARWIN_EXPORT
 - (void)addMethodCallDelegate:(nonnull id<FlutterPlugin>)delegate
                       channel:(nonnull FlutterMethodChannel*)channel;
 
+/**
+ * Registers the plugin as a receiver of `UIApplicationDelegate` calls.
+ *
+ * @param delegate The receiving object, such as the plugin's main class.
+ */
+- (void)addApplicationDelegate:(NSObject<FlutterPlugin>*)delegate;
+
 @end
 
 /**

@@ -110,6 +110,15 @@ static FlutterLocale FlutterLocaleFromNSLocale(NSLocale* locale) {
   }];
 }
 
+- (void)addApplicationDelegate:(NSObject<FlutterPlugin>*)delegate {
+  id<UIApplicationDelegate> appDelegate = [[UIApplication sharedApplication] delegate];
+  if ([appDelegate conformsToProtocol:@protocol(FlutterAppLifeCycleProvider)]) {
+    id<FlutterAppLifeCycleProvider> lifeCycleProvider =
+        (id<FlutterAppLifeCycleProvider>)appDelegate;
+    [lifeCycleProvider addApplicationLifeCycleDelegate:delegate];
+  }
+}
+
 @end
 
 // Callbacks provided to the engine. See the called methods for documentation.

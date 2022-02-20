@@ -47,6 +47,9 @@ final RegExp copyrightMentionOkPattern = RegExp(
      r'^ \* This implementation uses an idea from the SGI STL \(using a @a header node\n'
      r'^ \*    which is needed for efficient iteration\)\. Following is the SGI STL\n'
      r'^ \*    copyright\.\n'
+     r'|' // ImGui license mention
+     r'^// Developed by Omar Cornut and every direct or indirect contributors to the GitHub\.\n'
+     r'^// See LICENSE\.txt for copyright and licensing details \(standard MIT License\)\.\n'
   r')',
   caseSensitive: false, multiLine: true);
 final RegExp halfCopyrightPattern = RegExp(r'^(?:Copyright(?: \(c\))? [-0-9, ]+(?: by)?|Written [0-9]+)[ */]*$', caseSensitive: false);
@@ -229,6 +232,35 @@ final List<RegExp> csNoCopyrights = <RegExp>[
       r'following terms: Redistribution and use in source and binary forms, with or '
       r"without modification, are permitted\. There\'s ABSOLUTELY NO WARRANTY, "
       r'express or implied\.(?: \(This is a heavily cut-down "BSD license"\.\))?'
+      .replaceAll(' ', _linebreak)
+    ),
+    multiLine: true,
+    caseSensitive: false
+  ),
+
+  // Unlicense
+  RegExp(
+    kIndent +
+    (
+      r'This is free and unencumbered software released into the public domain. '
+      r'Anyone is free to copy, modify, publish, use, compile, sell, or '
+      r'distribute this software, either in source code form or as a compiled '
+      r'binary, for any purpose, commercial or non-commercial, and by any '
+      r'means. '
+      r'In jurisdictions that recognize copyright laws, the author or authors '
+      r'of this software dedicate any and all copyright interest in the '
+      r'software to the public domain. We make this dedication for the benefit '
+      r'of the public at large and to the detriment of our heirs and '
+      r'successors. We intend this dedication to be an overt act of '
+      r'relinquishment in perpetuity of all present and future rights to this '
+      r'software under copyright law. '
+      r'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, '
+      r'EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF '
+      r'MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. '
+      r'IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR '
+      r'OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, '
+      r'ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR '
+      r'OTHER DEALINGS IN THE SOFTWARE.'
       .replaceAll(' ', _linebreak)
     ),
     multiLine: true,
@@ -1539,6 +1571,30 @@ final List<RegExp> csLicenses = <RegExp>[
     caseSensitive: false
   ),
 
+  // seen in ImGui
+  RegExp(
+    kIndent +
+    r"This software is provided 'as-is', without any express or implied *\n"
+    r'^\1\2warranty\. +In no event will the authors be held liable for any damages *\n'
+    r'^\1\2arising from the use of this software\. *\n'
+    r'^(?:(?:\1\2? *)? *\n)*'
+    r'^\1\2Permission is granted to anyone to use this software for any purpose, *\n'
+    r'^\1\2including commercial applications, and to alter it and redistribute it *\n'
+    r'^\1\2freely, subject to the following restrictions: *\n'
+    r'^(?:(?:\1\2? *)? *\n)*'
+    r'^\1\2(?:[-*1-9.)/ ]+)The origin of this software must not be misrepresented; you must not *\n'
+    r'^\1\2 *claim that you wrote the original software\. +If you use this software *\n'
+    r'^\1\2 *in a product, an acknowledgment in the product documentation would be *\n'
+    r'^\1\2 *appreciated but is not required\. *\n'
+    r'^(?:(?:\1\2? *)? *\n)*'
+    r'^\1\2(?:[-*1-9.)/ ]+)Altered source versions must be plainly marked as such, and must not be *\n'
+    r'^\1\2 *misrepresented as being the original software\. *\n'
+    r'^(?:(?:\1\2? *)? *\n)*'
+    r'^\1\2(?:[-*1-9.)/ ]+)This notice may not be removed or altered from any source *\n'
+    r'^\1\2 *distribution\.',
+    multiLine: true,
+    caseSensitive: false
+  ),
 
   // MIT-DERIVED LICENSES
 

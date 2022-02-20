@@ -1,4 +1,4 @@
-Signature: 2a33cd81bfbbe05d86784b65ee96ec12
+Signature: d0be5ed87101f12e30627edeae6e1981
 
 UNUSED LICENSES:
 
@@ -2132,6 +2132,60 @@ POSSIBILITY OF SUCH DAMAGE.
 
 ====================================================================================================
 LIBRARY: angle
+LIBRARY: imgui
+LIBRARY: rapidjson
+ORIGIN: ../../../third_party/angle/include/GLES2/gl2.h
+TYPE: LicenseType.mit
+FILE: ../../../third_party/angle/include/GLES2/gl2.h
+FILE: ../../../third_party/angle/include/GLES2/gl2ext.h
+FILE: ../../../third_party/angle/include/GLES3/gl3.h
+FILE: ../../../third_party/angle/include/GLES3/gl31.h
+FILE: ../../../third_party/angle/include/GLES3/gl32.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_opengl3_loader.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/allocators.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/cursorstreamwrapper.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/document.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/encodedstream.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/encodings.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/error/en.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/error/error.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/filereadstream.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/filewritestream.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/fwd.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/biginteger.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/diyfp.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/dtoa.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/ieee754.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/itoa.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/meta.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/pow10.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/regex.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/stack.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/strfunc.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/strtod.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/internal/swap.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/istreamwrapper.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/memorybuffer.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/memorystream.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/ostreamwrapper.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/pointer.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/prettywriter.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/rapidjson.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/reader.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/schema.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/stream.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/stringbuffer.h
+FILE: ../../../third_party/rapidjson/include/rapidjson/writer.h
+----------------------------------------------------------------------------------------------------
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+====================================================================================================
+
+====================================================================================================
+LIBRARY: angle
 LIBRARY: khronos
 ORIGIN: ../../../third_party/angle/include/GLES/gl.h
 TYPE: LicenseType.unknown
@@ -2223,58 +2277,6 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
-====================================================================================================
-
-====================================================================================================
-LIBRARY: angle
-LIBRARY: rapidjson
-ORIGIN: ../../../third_party/angle/include/GLES2/gl2.h
-TYPE: LicenseType.mit
-FILE: ../../../third_party/angle/include/GLES2/gl2.h
-FILE: ../../../third_party/angle/include/GLES2/gl2ext.h
-FILE: ../../../third_party/angle/include/GLES3/gl3.h
-FILE: ../../../third_party/angle/include/GLES3/gl31.h
-FILE: ../../../third_party/angle/include/GLES3/gl32.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/allocators.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/cursorstreamwrapper.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/document.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/encodedstream.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/encodings.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/error/en.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/error/error.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/filereadstream.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/filewritestream.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/fwd.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/biginteger.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/diyfp.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/dtoa.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/ieee754.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/itoa.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/meta.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/pow10.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/regex.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/stack.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/strfunc.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/strtod.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/internal/swap.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/istreamwrapper.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/memorybuffer.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/memorystream.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/ostreamwrapper.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/pointer.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/prettywriter.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/rapidjson.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/reader.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/schema.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/stream.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/stringbuffer.h
-FILE: ../../../third_party/rapidjson/include/rapidjson/writer.h
-----------------------------------------------------------------------------------------------------
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ====================================================================================================
 
 ====================================================================================================
@@ -21012,6 +21014,249 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ====================================================================================================
 
 ====================================================================================================
+LIBRARY: imgui
+ORIGIN: ../../../third_party/imgui/LICENSE.txt
+TYPE: LicenseType.mit
+FILE: ../../../third_party/imgui/.editorconfig
+FILE: ../../../third_party/imgui/backends/imgui_impl_allegro5.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_allegro5.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_android.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_android.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_dx10.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_dx10.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_dx11.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_dx11.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_dx12.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_dx12.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_dx9.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_dx9.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_glfw.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_glfw.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_glut.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_glut.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_metal.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_metal.mm
+FILE: ../../../third_party/imgui/backends/imgui_impl_opengl2.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_opengl2.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_opengl3.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_opengl3.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_opengl3_loader.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_osx.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_osx.mm
+FILE: ../../../third_party/imgui/backends/imgui_impl_sdl.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_sdl.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_sdlrenderer.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_sdlrenderer.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_vulkan.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_vulkan.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_wgpu.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_wgpu.h
+FILE: ../../../third_party/imgui/backends/imgui_impl_win32.cpp
+FILE: ../../../third_party/imgui/backends/imgui_impl_win32.h
+FILE: ../../../third_party/imgui/backends/vulkan/glsl_shader.frag
+FILE: ../../../third_party/imgui/backends/vulkan/glsl_shader.vert
+FILE: ../../../third_party/imgui/examples/example_allegro5/example_allegro5.vcxproj
+FILE: ../../../third_party/imgui/examples/example_allegro5/example_allegro5.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_allegro5/imconfig_allegro5.h
+FILE: ../../../third_party/imgui/examples/example_allegro5/main.cpp
+FILE: ../../../third_party/imgui/examples/example_android_opengl3/android/app/src/main/AndroidManifest.xml
+FILE: ../../../third_party/imgui/examples/example_android_opengl3/android/app/src/main/java/MainActivity.kt
+FILE: ../../../third_party/imgui/examples/example_android_opengl3/main.cpp
+FILE: ../../../third_party/imgui/examples/example_apple_metal/example_apple_metal.xcodeproj/project.pbxproj
+FILE: ../../../third_party/imgui/examples/example_apple_metal/iOS/Info-iOS.plist
+FILE: ../../../third_party/imgui/examples/example_apple_metal/iOS/LaunchScreen.storyboard
+FILE: ../../../third_party/imgui/examples/example_apple_metal/macOS/Info-macOS.plist
+FILE: ../../../third_party/imgui/examples/example_apple_metal/macOS/MainMenu.storyboard
+FILE: ../../../third_party/imgui/examples/example_apple_metal/main.mm
+FILE: ../../../third_party/imgui/examples/example_apple_opengl2/example_apple_opengl2.xcodeproj/project.pbxproj
+FILE: ../../../third_party/imgui/examples/example_apple_opengl2/main.mm
+FILE: ../../../third_party/imgui/examples/example_emscripten_opengl3/main.cpp
+FILE: ../../../third_party/imgui/examples/example_emscripten_opengl3/shell_minimal.html
+FILE: ../../../third_party/imgui/examples/example_emscripten_wgpu/main.cpp
+FILE: ../../../third_party/imgui/examples/example_emscripten_wgpu/web/index.html
+FILE: ../../../third_party/imgui/examples/example_glfw_metal/main.mm
+FILE: ../../../third_party/imgui/examples/example_glfw_opengl2/example_glfw_opengl2.vcxproj
+FILE: ../../../third_party/imgui/examples/example_glfw_opengl2/example_glfw_opengl2.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_glfw_opengl2/main.cpp
+FILE: ../../../third_party/imgui/examples/example_glfw_opengl3/example_glfw_opengl3.vcxproj
+FILE: ../../../third_party/imgui/examples/example_glfw_opengl3/example_glfw_opengl3.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_glfw_opengl3/main.cpp
+FILE: ../../../third_party/imgui/examples/example_glfw_vulkan/example_glfw_vulkan.vcxproj
+FILE: ../../../third_party/imgui/examples/example_glfw_vulkan/example_glfw_vulkan.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_glfw_vulkan/main.cpp
+FILE: ../../../third_party/imgui/examples/example_glut_opengl2/example_glut_opengl2.vcxproj
+FILE: ../../../third_party/imgui/examples/example_glut_opengl2/example_glut_opengl2.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_glut_opengl2/main.cpp
+FILE: ../../../third_party/imgui/examples/example_null/main.cpp
+FILE: ../../../third_party/imgui/examples/example_sdl_directx11/example_sdl_directx11.vcxproj
+FILE: ../../../third_party/imgui/examples/example_sdl_directx11/example_sdl_directx11.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_sdl_directx11/main.cpp
+FILE: ../../../third_party/imgui/examples/example_sdl_metal/main.mm
+FILE: ../../../third_party/imgui/examples/example_sdl_opengl2/example_sdl_opengl2.vcxproj
+FILE: ../../../third_party/imgui/examples/example_sdl_opengl2/example_sdl_opengl2.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_sdl_opengl2/main.cpp
+FILE: ../../../third_party/imgui/examples/example_sdl_opengl3/example_sdl_opengl3.vcxproj
+FILE: ../../../third_party/imgui/examples/example_sdl_opengl3/example_sdl_opengl3.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_sdl_opengl3/main.cpp
+FILE: ../../../third_party/imgui/examples/example_sdl_sdlrenderer/example_sdl_sdlrenderer.vcxproj
+FILE: ../../../third_party/imgui/examples/example_sdl_sdlrenderer/example_sdl_sdlrenderer.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_sdl_sdlrenderer/main.cpp
+FILE: ../../../third_party/imgui/examples/example_sdl_vulkan/example_sdl_vulkan.vcxproj
+FILE: ../../../third_party/imgui/examples/example_sdl_vulkan/example_sdl_vulkan.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_sdl_vulkan/main.cpp
+FILE: ../../../third_party/imgui/examples/example_win32_directx10/example_win32_directx10.vcxproj
+FILE: ../../../third_party/imgui/examples/example_win32_directx10/example_win32_directx10.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_win32_directx10/main.cpp
+FILE: ../../../third_party/imgui/examples/example_win32_directx11/example_win32_directx11.vcxproj
+FILE: ../../../third_party/imgui/examples/example_win32_directx11/example_win32_directx11.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_win32_directx11/main.cpp
+FILE: ../../../third_party/imgui/examples/example_win32_directx12/example_win32_directx12.vcxproj
+FILE: ../../../third_party/imgui/examples/example_win32_directx12/example_win32_directx12.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_win32_directx12/main.cpp
+FILE: ../../../third_party/imgui/examples/example_win32_directx9/example_win32_directx9.vcxproj
+FILE: ../../../third_party/imgui/examples/example_win32_directx9/example_win32_directx9.vcxproj.filters
+FILE: ../../../third_party/imgui/examples/example_win32_directx9/main.cpp
+FILE: ../../../third_party/imgui/examples/imgui_examples.sln
+FILE: ../../../third_party/imgui/imconfig.h
+FILE: ../../../third_party/imgui/imgui.cpp
+FILE: ../../../third_party/imgui/imgui.h
+FILE: ../../../third_party/imgui/imgui_demo.cpp
+FILE: ../../../third_party/imgui/imgui_draw.cpp
+FILE: ../../../third_party/imgui/imgui_internal.h
+FILE: ../../../third_party/imgui/imgui_tables.cpp
+FILE: ../../../third_party/imgui/imgui_widgets.cpp
+FILE: ../../../third_party/imgui/imstb_rectpack.h
+FILE: ../../../third_party/imgui/imstb_textedit.h
+FILE: ../../../third_party/imgui/imstb_truetype.h
+FILE: ../../../third_party/imgui/misc/cpp/imgui_stdlib.cpp
+FILE: ../../../third_party/imgui/misc/cpp/imgui_stdlib.h
+FILE: ../../../third_party/imgui/misc/debuggers/imgui.gdb
+FILE: ../../../third_party/imgui/misc/debuggers/imgui.natstepfilter
+FILE: ../../../third_party/imgui/misc/debuggers/imgui.natvis
+FILE: ../../../third_party/imgui/misc/fonts/Cousine-Regular.ttf
+FILE: ../../../third_party/imgui/misc/fonts/DroidSans.ttf
+FILE: ../../../third_party/imgui/misc/fonts/Karla-Regular.ttf
+FILE: ../../../third_party/imgui/misc/fonts/ProggyClean.ttf
+FILE: ../../../third_party/imgui/misc/fonts/ProggyTiny.ttf
+FILE: ../../../third_party/imgui/misc/fonts/Roboto-Medium.ttf
+FILE: ../../../third_party/imgui/misc/fonts/binary_to_compressed_c.cpp
+FILE: ../../../third_party/imgui/misc/freetype/imgui_freetype.cpp
+FILE: ../../../third_party/imgui/misc/freetype/imgui_freetype.h
+FILE: ../../../third_party/imgui/misc/single_file/imgui_single_file.h
+----------------------------------------------------------------------------------------------------
+The MIT License (MIT)
+
+Copyright (c) 2014-2022 Omar Cornut
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+====================================================================================================
+
+====================================================================================================
+LIBRARY: imgui
+ORIGIN: ../../../third_party/imgui/examples/libs/glfw/COPYING.txt
+TYPE: LicenseType.zlib
+FILE: ../../../third_party/imgui/examples/libs/glfw/include/GLFW/glfw3.h
+FILE: ../../../third_party/imgui/examples/libs/glfw/include/GLFW/glfw3native.h
+FILE: ../../../third_party/imgui/examples/libs/glfw/lib-vc2010-32/glfw3.lib
+FILE: ../../../third_party/imgui/examples/libs/glfw/lib-vc2010-64/glfw3.lib
+----------------------------------------------------------------------------------------------------
+Copyright (c) 2002-2006 Marcus Geelnard
+Copyright (c) 2006-2010 Camilla Berglund <elmindreda@elmindreda.org>
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would
+   be appreciated but is not required.
+
+2. Altered source versions must be plainly marked as such, and must not
+   be misrepresented as being the original software.
+
+3. This notice may not be removed or altered from any source
+   distribution.
+====================================================================================================
+
+====================================================================================================
+LIBRARY: imgui
+ORIGIN: ../../../third_party/imgui/examples/libs/usynergy/uSynergy.c
+TYPE: LicenseType.zlib
+FILE: ../../../third_party/imgui/examples/libs/usynergy/uSynergy.c
+----------------------------------------------------------------------------------------------------
+Copyright (c) 2012 Alex Evans
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+   1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+
+   2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+
+   3. This notice may not be removed or altered from any source
+   distribution.
+====================================================================================================
+
+====================================================================================================
+LIBRARY: imgui
+ORIGIN: ../../../third_party/imgui/examples/libs/usynergy/uSynergy.h
+TYPE: LicenseType.zlib
+FILE: ../../../third_party/imgui/examples/libs/usynergy/uSynergy.h
+----------------------------------------------------------------------------------------------------
+Copyright (C) 2012 Synergy Si Ltd.
+Copyright (c) 2012 Alex Evans
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+   1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+
+   2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+
+   3. This notice may not be removed or altered from any source
+   distribution.
+====================================================================================================
+
+====================================================================================================
 LIBRARY: khronos
 ORIGIN: ../../../third_party/khronos/EGL/eglplatform.h
 TYPE: LicenseType.unknown
@@ -25892,4 +26137,4 @@ freely, subject to the following restrictions:
    misrepresented as being the original software.
 3. This notice may not be removed or altered from any source distribution.
 ====================================================================================================
-Total license count: 410
+Total license count: 414

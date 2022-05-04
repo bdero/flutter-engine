@@ -34,6 +34,8 @@ impeller_component("entity") {
   sources = [
     "contents/clip_contents.cc",
     "contents/clip_contents.h",
+    "contents/color_source_vertices.cc",
+    "contents/color_source_vertices.h",
     "contents/content_context.cc",
     "contents/content_context.h",
     "contents/contents.cc",

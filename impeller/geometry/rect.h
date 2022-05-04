@@ -170,6 +170,12 @@ struct TRect {
     );
   }
 
+  constexpr TRect Union(const TPoint<T>& point) const {
+    return TRect::MakeLTRB(
+        std::min(GetLeft(), point.x), std::min(GetTop(), point.y),
+        std::max(GetRight(), point.x), std::max(GetBottom(), point.y));
+  }
+
   constexpr std::optional<TRect<T>> Intersection(const TRect& o) const {
     auto this_ltrb = GetLTRB();
     auto other_ltrb = o.GetLTRB();

@@ -10,6 +10,7 @@
 #include "impeller/geometry/color.h"
 #include "impeller/geometry/path.h"
 #include "impeller/geometry/point.h"
+#include "impeller/geometry/rect.h"
 #include "impeller/renderer/formats.h"
 
 namespace impeller {
@@ -32,13 +33,17 @@ struct ColorSourceVertices {
   std::optional<std::vector<Color>> colors;
   std::optional<std::vector<uint16_t>> indices;
 
+  static ColorSourceVertices MakeFromRect(Rect rect);
+
   static ColorSourceVertices MakeFromPathFill(Path path);
 
   std::optional<Rect> GetBounds() const;
 
   bool IsValid() const;
 
-  void GenerateTextureCoordinates();
+  void SetNormalizedTextureCoordinates();
+
+  void SetCountingIndices();
 
   std::optional<std::vector<PosTexCol>> GetPosTexCol();
 

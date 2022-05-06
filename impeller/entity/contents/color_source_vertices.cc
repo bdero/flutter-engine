@@ -6,14 +6,24 @@
 
 #include <optional>
 #include <utility>
+#include <vector>
 
 #include "impeller/tessellator/tessellator.h"
 
 namespace impeller {
 
-ColorSourceVertices ColorSourceVertices::MakeFromPathFill(
-    Path path,
-    bool generate_texture_coordinates) {
+ColorSourceVertices ColorSourceVertices::MakeFromRect(Rect rect) {
+  ColorSourceVertices vertices;
+  vertices.primitive_type = PrimitiveType::kTriangleStrip;
+
+  auto r = rect.GetLTRB();
+  vertices.positions = {{r[0], r[1]}, {r[0], r[3]}, {r[2], r[1]}, {r[2], r[3]}};
+  vertices.indices = {0, 1, 2, 3};
+
+  return vertices;
+}
+
+ColorSourceVertices ColorSourceVertices::MakeFromPathFill(Path path) {
   ColorSourceVertices vertices;
   vertices.primitive_type = PrimitiveType::kTriangle;
 
@@ -24,6 +34,7 @@ ColorSourceVertices ColorSourceVertices::MakeFromPathFill(
                                ? vertices.bounds_->Union(point)
                                : Rect();
       });
+  vertices.SetCountingIndices();
 
   return vertices;
 }
@@ -31,6 +42,10 @@ ColorSourceVertices ColorSourceVertices::MakeFromPathFill(
 std::optional<Rect> ColorSourceVertices::GetBounds() const {
   if (bounds_.has_value()) {
     return bounds_;
+  }
+
+  if (positions.empty()) {
+    return std::nullopt;
   }
 
   for (const auto& position : positions) {
@@ -53,7 +68,7 @@ bool ColorSourceVertices::IsValid() const {
   return true;
 }
 
-void ColorSourceVertices::GenerateTextureCoordinates() {
+void ColorSourceVertices::SetNormalizedTextureCoordinates() {
   auto bounds = GetBounds();
   if (!bounds.has_value()) {
     return;
@@ -63,6 +78,17 @@ void ColorSourceVertices::GenerateTextureCoordinates() {
 
   for (const auto& position : positions) {
     texture_coordinates->push_back((position - bounds->origin) / bounds->size);
+  }
+}
+
+void ColorSourceVertices::SetCountingIndices() {
+  if (!indices.has_value()) {
+    indices = std::vector<uint16_t>();
+  }
+  indices->clear();
+  indices->reserve(positions.size());
+  for (size_t i = 0; i < positions.size(); i++) {
+    indices->push_back(i);
   }
 }
 

@@ -46,7 +46,7 @@ class Picture : public RefCountedDartWrappable<Picture> {
 
   static void RegisterNatives(tonic::DartLibraryNatives* natives);
 
-  static Dart_Handle RasterizeToImage(sk_sp<DisplayList> display_list,
+  static Dart_Handle RasterizeToImage(sk_sp<SkPicture> picture,
                                       uint32_t width,
                                       uint32_t height,
                                       Dart_Handle raw_image_callback);

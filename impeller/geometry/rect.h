@@ -205,14 +205,6 @@ struct TRect {
   constexpr bool IntersectsWithRect(const TRect& o) const {
     return Intersection(o).has_value();
   }
-
-  inline constexpr bool IntersectsWithRect(
-      const std::optional<TRect>& o) const {
-    if (!o.has_value()) {
-      return false;
-    }
-    return IntersectsWithRect(o);
-  }
 };
 
 using Rect = TRect<Scalar>;

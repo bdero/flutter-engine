@@ -67,12 +67,17 @@ std::optional<Snapshot> Contents::RenderToSnapshot(
 bool Contents::ShouldRender(const Entity& entity,
                             const std::optional<Rect>& stencil_coverage) const {
   if (!stencil_coverage.has_value()) {
-    return false;
+    return true;
   }
   if (Entity::BlendModeShouldCoverWholeScreen(entity.GetBlendMode())) {
     return true;
   }
-  return stencil_coverage->IntersectsWithRect(GetCoverage(entity));
+
+  auto coverage = GetCoverage(entity);
+  if (!coverage.has_value()) {
+    return true;
+  }
+  return stencil_coverage->IntersectsWithRect(coverage.value());
 }
 
 }  // namespace impeller

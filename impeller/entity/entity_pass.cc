@@ -371,6 +371,12 @@ EntityPass::EntityResult EntityPass::GetEntityForElement(
   return EntityPass::EntityResult::Success(element_entity);
 }
 
+struct StencilLayer {
+  std::optional<Rect> coverage;
+  std::optional<Entity> pending_stencil;
+  bool should_restore = false;
+};
+
 bool EntityPass::OnRender(
     ContentContext& renderer,
     ISize root_pass_size,
@@ -389,8 +395,11 @@ bool EntityPass::OnRender(
     return false;
   }
 
-  std::vector<std::optional<Rect>> stencil_stack = {
-      Rect::MakeSize(render_target.GetRenderTargetSize())};
+  std::vector<StencilLayer> stencil_stack = {StencilLayer{
+      .coverage = Rect::MakeSize(render_target.GetRenderTargetSize()),
+      .pending_stencil = std::nullopt,
+      .should_restore = false,
+  }};
 
   auto render_element = [&stencil_depth_floor, &pass_context, &pass_depth,
                          &renderer, &stencil_stack](Entity& element_entity) {
@@ -399,6 +408,9 @@ bool EntityPass::OnRender(
     if (!result.pass) {
       return false;
     }
+
+    element_entity.SetStencilDepth(element_entity.GetStencilDepth() -
+                                   stencil_depth_floor);
 
     // If the pass context returns a texture, we need to draw it to the current
     // pass. We do this because it's faster and takes significantly less memory
@@ -419,37 +431,47 @@ bool EntityPass::OnRender(
       }
     }
 
-    if (!element_entity.ShouldRender(stencil_stack.back())) {
+    if (!element_entity.ShouldRender(stencil_stack.back().coverage)) {
       return true;  // Nothing to render.
     }
 
     auto stencil_coverage =
-        element_entity.GetStencilCoverage(stencil_stack.back());
+        element_entity.GetStencilCoverage(stencil_stack.back().coverage);
+
+    // If this entity isn't a stencil restore op and there's a pending stencil
+    // op, that means the pending stencil will be used, so render it now.
+    if (stencil_stack.back().pending_stencil.has_value() &&
+        stencil_coverage.type != Contents::StencilCoverage::Type::kRestore) {
+      auto& stencil_layer = stencil_stack.back();
+      stencil_layer.pending_stencil->Render(renderer, *result.pass);
+      stencil_layer.pending_stencil = std::nullopt;
+      stencil_layer.should_restore = true;
+    }
 
     switch (stencil_coverage.type) {
       case Contents::StencilCoverage::Type::kNone:
         break;
-      case Contents::StencilCoverage::Type::kAppend: {
-        auto op = stencil_stack.back();
-        stencil_stack.push_back(stencil_coverage.coverage);
-
-        if (!op.has_value()) {
-          // Running this append op won't impact the stencil, so skip it.
-          return true;
-        }
-      } break;
+      case Contents::StencilCoverage::Type::kAppend:
+        // Stencil append ops are stashed in stencil stack layers and only
+        // rendered if at least one entity depends on them.
+        stencil_stack.push_back({
+            .coverage = stencil_coverage.coverage,
+            .pending_stencil = element_entity,
+            .should_restore = false,
+        });
+        return true;
       case Contents::StencilCoverage::Type::kRestore: {
+        auto op = stencil_stack.back();
         stencil_stack.pop_back();
 
-        if (!stencil_stack.back().has_value()) {
-          // Running this restore op won't make anything renderable, so skip it.
+        // Only render stencil restore ops if a corresponding append op was
+        // rendered.
+        if (!op.should_restore) {
           return true;
         }
       } break;
     }
 
-    element_entity.SetStencilDepth(element_entity.GetStencilDepth() -
-                                   stencil_depth_floor);
     if (!element_entity.Render(renderer, *result.pass)) {
       return false;
     }

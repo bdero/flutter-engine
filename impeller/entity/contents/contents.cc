@@ -29,6 +29,13 @@ Contents::Contents() = default;
 
 Contents::~Contents() = default;
 
+Contents::StencilCoverage Contents::GetStencilCoverage(
+    const Entity& entity,
+    const std::optional<Rect>& current_stencil_coverage) const {
+  return {.type = StencilCoverage::Type::kNone,
+          .coverage = current_stencil_coverage};
+}
+
 std::optional<Snapshot> Contents::RenderToSnapshot(
     const ContentContext& renderer,
     const Entity& entity) const {
@@ -58,10 +65,14 @@ std::optional<Snapshot> Contents::RenderToSnapshot(
 }
 
 bool Contents::ShouldRender(const Entity& entity,
-                            const ISize& target_size) const {
-  auto coverage = GetCoverage(entity);
-  return coverage.has_value() &&
-         Rect::MakeSize(target_size).IntersectsWithRect(coverage.value());
+                            const std::optional<Rect>& stencil_coverage) const {
+  if (!stencil_coverage.has_value()) {
+    return false;
+  }
+  if (Entity::BlendModeShouldCoverWholeScreen(entity.GetBlendMode())) {
+    return true;
+  }
+  return stencil_coverage->IntersectsWithRect(GetCoverage(entity));
 }
 
 }  // namespace impeller

@@ -163,6 +163,11 @@ bool TextureContents::Render(const ContentContext& renderer,
   frag_info.texture_sampler_y_coord_scale = texture_->GetYCoordScale();
   frag_info.alpha = opacity_;
 
+  if (sampler_descriptor_.mag_filter == MinMagFilter::kLinear) {
+    frag_info.half_texel = Vector2(0.5 / texture_->GetSize().width,
+                                   0.5 / texture_->GetSize().height);
+  }
+
   Command cmd;
   cmd.label = "Texture Fill";
   if (!label_.empty()) {

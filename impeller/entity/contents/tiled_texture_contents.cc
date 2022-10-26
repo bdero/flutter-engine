@@ -63,6 +63,11 @@ bool TiledTextureContents::Render(const ContentContext& renderer,
   frag_info.y_tile_mode = static_cast<Scalar>(y_tile_mode_);
   frag_info.alpha = GetAlpha();
 
+  if (sampler_descriptor_.mag_filter == MinMagFilter::kLinear) {
+    frag_info.half_texel = Vector2(0.5 / texture_->GetSize().width,
+                                   0.5 / texture_->GetSize().height);
+  }
+
   Command cmd;
   cmd.label = "TiledTextureFill";
   cmd.pipeline =

@@ -55,7 +55,7 @@ class CompilerSkSL : public spirv_cross::CompilerGLSL {
       const spirv_cross::Bitset& return_flags) override;
 
   std::string image_type_glsl(const spirv_cross::SPIRType& type,
-                              uint32_t id = 0) override;
+                              uint32_t id) override;
 
   std::string builtin_to_glsl(spv::BuiltIn builtin,
                               spv::StorageClass storage) override;

@@ -13,5 +13,5 @@ out vec2 v_position;
 
 void main() {
   gl_Position = vert_info.mvp * vec4(position, 0.0, 1.0);
-  v_position = IPVec2TransformPosition(vert_info.mvp, position);
+  v_position = position;
 }

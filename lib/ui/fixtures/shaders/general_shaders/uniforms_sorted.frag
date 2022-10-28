@@ -1,5 +1,3 @@
-#version 320 es
-
 // Copyright 2013 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -8,8 +6,6 @@
 // unifroms is retained. The values of the uniforms in the test are strictly
 // increasing. If two uniforms are out of order, the output color is red. If
 // the uniforms are in the right order, the output color is green.
-
-precision highp float;
 
 layout(location = 0) uniform vec4 u_color;
 layout(location = 1) uniform float u_alpha;

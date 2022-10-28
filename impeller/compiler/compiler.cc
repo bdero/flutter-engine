@@ -10,6 +10,7 @@
 #include <sstream>
 #include <utility>
 
+#include "flutter/fml/mapping.h"
 #include "flutter/fml/paths.h"
 #include "impeller/base/allocation.h"
 #include "impeller/compiler/compiler_backend.h"
@@ -236,11 +237,43 @@ void Compiler::SetBindingBase(shaderc::CompileOptions& compiler_opts) const {
   }
 }
 
-Compiler::Compiler(const fml::Mapping& source_mapping,
+/// Prepend runtime stage sources with special runtime stage functions for end
+/// users to consume.
+static std::unique_ptr<fml::DataMapping> GetRuntimeStageSourceMapping(
+    const fml::Mapping& mapping) {
+  std::stringstream stream;
+  stream << R"(
+#if defined(IMPELLER_GRAPHICS_BACKEND)
+
+in vec2 _fragCoord;
+vec2 FlutterFragCoord() {
+  return _fragCoord;
+}
+
+#elif defined(SKIA_GRAPHICS_BACKEND)
+
+vec2 FlutterFragCoord() {
+  return gl_FragCoord.xy;
+}
+
+#else
+#error "Runtime stage is not supported for this graphics backend."
+#endif
+)";
+  stream.write(reinterpret_cast<const char*>(mapping.GetMapping()),
+               mapping.GetSize());
+
+  return std::make_unique<fml::DataMapping>(stream.str());
+}
+
+Compiler::Compiler(const fml::Mapping& source_mapping_ref,
                    const SourceOptions& source_options,
                    Reflector::Options reflector_options)
     : options_(source_options) {
-  if (source_mapping.GetMapping() == nullptr) {
+  const uint8_t* source_mapping = source_mapping_ref.GetMapping();
+  size_t source_mapping_size = source_mapping_ref.GetSize();
+
+  if (source_mapping == nullptr) {
     COMPILER_ERROR
         << "Could not read shader source or shader source was empty.";
     return;
@@ -273,6 +306,8 @@ Compiler::Compiler(const fml::Mapping& source_mapping,
                                         shaderc_profile::shaderc_profile_core);
   SetLimitations(spirv_options);
 
+  std::unique_ptr<const fml::Mapping> runtime_stage_source_mapping;
+
   switch (source_options.target_platform) {
     case TargetPlatform::kMetalDesktop:
     case TargetPlatform::kMetalIOS:
@@ -304,6 +339,13 @@ Compiler::Compiler(const fml::Mapping& source_mapping,
           shaderc_env_version::shaderc_env_version_opengl_4_5);
       spirv_options.SetTargetSpirv(
           shaderc_spirv_version::shaderc_spirv_version_1_0);
+
+      spirv_options.AddMacroDefinition("IMPELLER_GRAPHICS_BACKEND");
+
+      runtime_stage_source_mapping = GetRuntimeStageSourceMapping(
+          fml::NonOwnedMapping(source_mapping, source_mapping_size));
+      source_mapping = runtime_stage_source_mapping->GetMapping();
+      source_mapping_size = runtime_stage_source_mapping->GetSize();
       break;
     case TargetPlatform::kSkSL:
       // When any optimization level above 'zero' is enabled, the phi merges at
@@ -317,6 +359,13 @@ Compiler::Compiler(const fml::Mapping& source_mapping,
           shaderc_env_version::shaderc_env_version_opengl_4_5);
       spirv_options.SetTargetSpirv(
           shaderc_spirv_version::shaderc_spirv_version_1_0);
+
+      spirv_options.AddMacroDefinition("SKIA_GRAPHICS_BACKEND");
+
+      runtime_stage_source_mapping = GetRuntimeStageSourceMapping(
+          fml::NonOwnedMapping(source_mapping, source_mapping_size));
+      source_mapping = runtime_stage_source_mapping->GetMapping();
+      source_mapping_size = runtime_stage_source_mapping->GetSize();
       break;
     case TargetPlatform::kUnknown:
       COMPILER_ERROR << "Target platform invalid.";
@@ -352,13 +401,12 @@ Compiler::Compiler(const fml::Mapping& source_mapping,
   // SPIRV Generation.
   spv_result_ = std::make_shared<shaderc::SpvCompilationResult>(
       spv_compiler.CompileGlslToSpv(
-          reinterpret_cast<const char*>(
-              source_mapping.GetMapping()),         // source_text
-          source_mapping.GetSize(),                 // source_text_size
-          shader_kind,                              // shader_kind
-          source_options.file_name.c_str(),         // input_file_name
-          source_options.entry_point_name.c_str(),  // entry_point_name
-          spirv_options                             // options
+          reinterpret_cast<const char*>(source_mapping),  // source_text
+          source_mapping_size,                            // source_text_size
+          shader_kind,                                    // shader_kind
+          source_options.file_name.c_str(),               // input_file_name
+          source_options.entry_point_name.c_str(),        // entry_point_name
+          spirv_options                                   // options
           ));
   if (spv_result_->GetCompilationStatus() !=
       shaderc_compilation_status::shaderc_compilation_status_success) {

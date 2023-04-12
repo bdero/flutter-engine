@@ -424,6 +424,15 @@ void Canvas::SaveLayer(
 void Canvas::DrawTextFrame(const TextFrame& text_frame,
                            Point position,
                            const Paint& paint) {
+  Color clear_color = GetCurrentPass().GetClearColor();
+  bool is_opaque = paint.blend_mode == BlendMode::kSource ||
+                   (paint.blend_mode == BlendMode::kSourceOver);
+  if (GetCurrentPass().GetElementCount() == 0 &&  // and this is the first item,
+      clear_color == paint.color &&               //
+      clear_color.alpha == 1.0 &&                 //
+      is_opaque) {
+    return;
+  }
   lazy_glyph_atlas_->AddTextFrame(text_frame);
 
   Entity entity;

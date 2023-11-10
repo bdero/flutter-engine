@@ -721,6 +721,9 @@ deps = {
   'src/third_party/stb':
   Var('github_git') + '/nothings/stb.git' + '@' + '5736b15f7ea0ffb08dd38af21067c314d6a3aae9',
 
+  'src/third_party/openxr_sdk':
+  Var('github_git') + '/KhronosGroup/OpenXR-SDK-Source.git' + '@' + '5e9bc99c5e2e9d8873a83db58aec6ee63dd1f289',
+
   'src/third_party/gradle': {
     'packages': [
       {

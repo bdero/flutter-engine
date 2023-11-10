@@ -9,6 +9,7 @@
 #include "flutter/impeller/renderer/backend/gles/reactor_gles.h"
 #include "flutter/impeller/toolkit/egl/context.h"
 #include "flutter/impeller/toolkit/egl/surface.h"
+#include "fml/native_library.h"
 #include "impeller/entity/gles/entity_shaders_gles.h"
 #include "impeller/entity/gles/framebuffer_blend_shaders_gles.h"
 
@@ -51,6 +52,19 @@ class AndroidContextGLImpeller::ReactorWorker final
 static std::shared_ptr<impeller::Context> CreateImpellerContext(
     const std::shared_ptr<impeller::ReactorGLES::Worker>& worker,
     bool enable_gpu_tracing) {
+  // The OpenXR loader generates code as part of the build, which makes it a
+  // huge PITA. So just cheese it by loading the runtime directly for now...
+  //
+  // I found the actual openxr runtime location by poking around the filesystem
+  // on the device to find the manifest. The loader is supposed to parse this
+  // file:
+  //   `/etc/openxr/1/active_runtime.json`
+  auto lib = fml::NativeLibrary::Create(
+      "/system/lib64/libopenxr_forwardloader.oculus.so");
+  if (!lib) {
+    FML_LOG(ERROR) << "FAILED TO FIND OPENXR LOADER!";
+  }
+
   auto proc_table = std::make_unique<impeller::ProcTableGLES>(
       impeller::egl::CreateProcAddressResolver());
 

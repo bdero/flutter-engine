@@ -121,7 +121,8 @@ void PointerDataPacketConverter::ConvertPointerData(
           state = iter->second;
         }
 
-        FML_DCHECK(!state.is_down);
+        // This is a bad assumption on the Meta Quest 3, apparently.
+        // FML_DCHECK(!state.is_down);
         state.buttons = pointer_data.buttons;
         if (LocationNeedsUpdate(pointer_data, state)) {
           UpdateDeltaAndState(pointer_data, state);

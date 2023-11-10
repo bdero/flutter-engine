@@ -4,6 +4,8 @@
      found in the LICENSE file.
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="io.flutter.app" android:versionCode="1" android:versionName="0.0.1">
+    <uses-permission android:name="org.khronos.openxr.permission.OPENXR" />
+    <uses-permission android:name="org.khronos.openxr.permission.OPENXR_SYSTEM" />
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="31" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -30,6 +32,17 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT" />
             <data android:mimeType="text/plain" />
+        </intent>
+
+        <!-- to talk to the broker -->
+        <provider android:authorities="org.khronos.openxr.runtime_broker;org.khronos.openxr.system_runtime_broker" />
+
+        <!-- so client-side code of runtime/layers can talk to their service sides -->
+        <intent>
+            <action android:name="org.khronos.openxr.OpenXRRuntimeService" />
+        </intent>
+        <intent>
+            <action android:name="org.khronos.openxr.OpenXRApiLayerService" />
         </intent>
     </queries>
  </manifest>

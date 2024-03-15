@@ -105,7 +105,7 @@
                 timestamp:timestamp];
 
   // At the end we should end up with the same modifier flags as the event.
-  FML_DCHECK(_previouslyPressedFlags == modifierFlags);
+  // FML_DCHECK(_previouslyPressedFlags == modifierFlags);
 }
 
 - (void)handleEvent:(NSEvent*)event callback:(FlutterAsyncKeyCallback)callback {

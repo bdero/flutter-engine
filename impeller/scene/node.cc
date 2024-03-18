@@ -367,7 +367,12 @@ bool Node::Render(SceneEncoder& encoder,
           }
         }
 
-        clip->SetPlaying(e->playing);
+        if (e->playing) {
+          clip->Play();
+        } else {
+          // clip->Seek(SecondsF(0));
+          clip->Stop();
+        }
         clip->SetLoop(e->loop);
         clip->SetWeight(e->weight);
         clip->SetPlaybackTimeScale(e->time_scale);

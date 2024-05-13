@@ -148,29 +148,28 @@ bool Manager::InitializeConfig(bool enable_impeller) {
 
   const EGLint impeller_config_attributes[] = {
       EGL_RED_SIZE,       8, EGL_GREEN_SIZE, 8, EGL_BLUE_SIZE,    8,
-      EGL_ALPHA_SIZE,     8, EGL_DEPTH_SIZE, 0, EGL_STENCIL_SIZE, 8,
+      EGL_ALPHA_SIZE,     8, EGL_DEPTH_SIZE, 0, EGL_STENCIL_SIZE, 0,
       EGL_SAMPLE_BUFFERS, 1, EGL_SAMPLES,    4, EGL_NONE};
   const EGLint impeller_config_attributes_no_msaa[] = {
       EGL_RED_SIZE,   8, EGL_GREEN_SIZE, 8, EGL_BLUE_SIZE,    8,
-      EGL_ALPHA_SIZE, 8, EGL_DEPTH_SIZE, 0, EGL_STENCIL_SIZE, 8,
-      EGL_NONE};
+      EGL_ALPHA_SIZE, 8, EGL_DEPTH_SIZE, 0, EGL_STENCIL_SIZE, 0, EGL_NONE};
 
   EGLBoolean result;
   EGLint num_config = 0;
 
   if (enable_impeller) {
     // First try the MSAA configuration.
-    result = ::eglChooseConfig(display_, impeller_config_attributes, &config_,
-                               1, &num_config);
-
-    if (result == EGL_TRUE && num_config > 0) {
-      return true;
-    }
+//    result = ::eglChooseConfig(display_, impeller_config_attributes, &config_,
+//                               1, &num_config);
+//
+//    if (result == EGL_TRUE && num_config > 0) {
+//      return true;
+//    }
 
     // Next fall back to disabled MSAA.
     result = ::eglChooseConfig(display_, impeller_config_attributes_no_msaa,
                                &config_, 1, &num_config);
-    if (result == EGL_TRUE && num_config == 0) {
+    if (result == EGL_TRUE && num_config > 0) {
       return true;
     }
   } else {

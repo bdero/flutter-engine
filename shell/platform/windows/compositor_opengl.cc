@@ -20,17 +20,26 @@ struct FramebufferBackingStore {
   uint32_t texture_id;
 };
 
+// Mirrors the logic in the Linux embedder (`fl_backing_store_provider_get_gl_format`).
 // Based off Skia's logic:
 // https://github.com/google/skia/blob/4738ed711e03212aceec3cd502a4adb545f38e63/src/gpu/ganesh/gl/GrGLCaps.cpp#L1963-L2116
 int GetSupportedTextureFormat(const impeller::DescriptionGLES* description) {
-  if (description->HasExtension("GL_EXT_texture_format_BGRA8888")) {
-    return GL_BGRA8_EXT;
-  } else if (description->HasExtension("GL_APPLE_texture_format_BGRA8888") &&
-             description->GetGlVersion().IsAtLeast(impeller::Version(3, 0))) {
-    return GL_BGRA8_EXT;
+  if (!description->IsES()) {
+    // For OpenGL.
+    if (description->GetGlVersion().IsAtLeast(impeller::Version(1, 2)) &&
+        description->HasExtension("GL_EXT_bgra")) {
+      return GL_RGBA8;
+    }
   } else {
-    return GL_RGBA8;
+    // For OpenGL ES.
+    if (description->HasExtension("GL_EXT_texture_format_BGRA8888") ||
+      (description->HasExtension("GL_APPLE_texture_format_BGRA8888") &&
+      description->GetGlVersion().IsAtLeast(impeller::Version(3, 0)))) {
+      return GL_BGRA8_EXT;
+    }
   }
+  FML_LOG(ERROR) << "Failed to determine valid GL format for Flutter rendering";
+  return GL_RGBA8;
 }
 
 }  // namespace
@@ -69,6 +78,11 @@ bool CompositorOpenGL::CreateBackingStore(
   result->open_gl.type = kFlutterOpenGLTargetTypeFramebuffer;
   result->open_gl.framebuffer.name = store->framebuffer_id;
   result->open_gl.framebuffer.target = format_;
+  FML_LOG(ERROR)
+      << "CompositorOpenGL::CreateBackingStore -- name/framebuffer ID: "
+      << result->open_gl.framebuffer.name
+      << " target/format: " << result->open_gl.framebuffer.target
+      << " texture ID: " << store->texture_id;
   result->open_gl.framebuffer.user_data = store.release();
   result->open_gl.framebuffer.destruction_callback = [](void* user_data) {
     // Backing store destroyed in `CompositorOpenGL::CollectBackingStore`, set
@@ -88,6 +102,9 @@ bool CompositorOpenGL::CollectBackingStore(const FlutterBackingStore* store) {
   gl_->DeleteFramebuffers(1, &user_data->framebuffer_id);
   gl_->DeleteTextures(1, &user_data->texture_id);
 
+  FML_LOG(ERROR) << "Collected backing store: " << user_data->framebuffer_id
+                 << " target/format: " << store->open_gl.framebuffer.target
+                 << " texture ID: " << user_data->texture_id;
   delete user_data;
   return true;
 }
@@ -146,6 +163,10 @@ bool CompositorOpenGL::Present(FlutterWindowsView* view,
 
   gl_->BindFramebuffer(GL_READ_FRAMEBUFFER, source_id);
   gl_->BindFramebuffer(GL_DRAW_FRAMEBUFFER, kWindowFrameBufferId);
+
+  FML_LOG(ERROR) << "CompositorOpenGL::Present -- source framebuffer: " << source_id
+                 << " destination framebuffer: " << kWindowFrameBufferId << " target/format: "
+                 << format_ << " width: " << width << " height: " << height;
 
   gl_->BlitFramebuffer(0,                    // srcX0
                        0,                    // srcY0

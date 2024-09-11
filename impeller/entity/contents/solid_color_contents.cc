@@ -63,9 +63,11 @@ bool SolidColorContents::Render(const ContentContext& renderer,
       };
   return ColorSourceContents::DrawGeometry<VS>(
       renderer, entity, pass, pipeline_callback, frame_info,
-      [&frag_info, &host_buffer](RenderPass& pass) {
+      [&frag_info, &host_buffer, &entity](RenderPass& pass) {
         FS::BindFragInfo(pass, host_buffer.EmplaceUniform(frag_info));
-        pass.SetCommandLabel("Solid Fill");
+        pass.SetCommandLabel("Solid Fill: Depth=" +
+                             std::to_string(entity.GetClipDepth()));
+        FML_LOG(ERROR) << "    Solid Fill: Depth=" << entity.GetClipDepth();
         return true;
       });
 }

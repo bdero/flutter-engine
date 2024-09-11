@@ -141,9 +141,14 @@ bool TextureContents::Render(const ContentContext& renderer,
 
 #ifdef IMPELLER_DEBUG
   if (label_.empty()) {
-    pass.SetCommandLabel("Texture Fill");
+    pass.SetCommandLabel("Texture Fill: Depth=" +
+                         std::to_string(entity.GetClipDepth()));
+    FML_LOG(ERROR) << "    Texture Fill: Depth=" << entity.GetClipDepth();
   } else {
-    pass.SetCommandLabel("Texture Fill: " + label_);
+    pass.SetCommandLabel("Texture Fill: " + label_ +
+                         ": Depth=" + std::to_string(entity.GetClipDepth()));
+    FML_LOG(ERROR) << "    Texture Fill: " << label_
+                   << ": Depth=" << entity.GetClipDepth();
   }
 #endif  // IMPELLER_DEBUG
 

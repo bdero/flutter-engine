@@ -143,13 +143,15 @@ bool ClipContents::Render(const ContentContext& renderer,
   Rect cover_area;
   switch (clip_op_) {
     case Entity::ClipOperation::kIntersect:
-      pass.SetCommandLabel("Intersect Clip");
+      pass.SetCommandLabel("Intersect Clip: Depth=" +
+                           std::to_string(entity.GetClipDepth()));
       options.stencil_mode =
           ContentContextOptions::StencilMode::kCoverCompareInverted;
       cover_area = Rect::MakeSize(pass.GetRenderTargetSize());
       break;
     case Entity::ClipOperation::kDifference:
-      pass.SetCommandLabel("Difference Clip");
+      pass.SetCommandLabel("Difference Clip: Depth=" +
+                           std::to_string(entity.GetClipDepth()));
       options.stencil_mode = ContentContextOptions::StencilMode::kCoverCompare;
       std::optional<Rect> maybe_cover_area =
           geometry_->GetCoverage(entity.GetTransform());

@@ -855,6 +855,13 @@ bool EntityPass::RenderElement(Entity& element_entity,
              clip_coverage_stack.GetNextReplayResult(
                  element_entity.GetClipDepth())) {
     auto& replay_entity = next_replay_clip->entity;
+    FML_LOG(ERROR) << "    Replay Clip: Depth=" << replay_entity.GetClipDepth();
+    if (next_replay_clip->clip_coverage.has_value()) {
+      FML_LOG(ERROR) << "      coverage: "
+                     << next_replay_clip->clip_coverage.value();
+    } else {
+      FML_LOG(ERROR) << "      coverage: None";
+    }
     SetClipScissor(next_replay_clip->clip_coverage, *result.pass,
                    global_pass_position);
     if (!replay_entity.Render(renderer, *result.pass)) {
@@ -893,13 +900,21 @@ bool EntityPass::RenderElement(Entity& element_entity,
                                          clip_height_floor,
                                          global_pass_position);
 
-  if (clip_state_result.clip_did_change) {
-    // We only need to update the pass scissor if the clip state has changed.
-    SetClipScissor(clip_coverage_stack.CurrentClipCoverage(), *result.pass,
-                   global_pass_position);
+  // if (clip_state_result.clip_did_change) {
+  //  We only need to update the pass scissor if the clip state has changed.
+  SetClipScissor(clip_coverage_stack.CurrentClipCoverage(), *result.pass,
+                 global_pass_position);
+  if (clip_coverage_stack.CurrentClipCoverage().has_value()) {
+    FML_LOG(ERROR) << "    Set scissor: "
+                   << clip_coverage_stack.CurrentClipCoverage().value();
+  } else {
+    FML_LOG(ERROR) << "    Set scissor: None";
   }
+  FML_LOG(ERROR) << "    Entity depth=" << element_entity.GetClipDepth();
+  //}
 
   if (!clip_state_result.should_render) {
+    FML_LOG(ERROR) << "    Skipping clip render because should_render=false.";
     return true;
   }
 
@@ -999,7 +1014,7 @@ bool EntityPass::OnRender(
     }
   }
 
-  using ElementCallback = std::function<bool(const Element&)>;
+  using ElementCallback = std::function<bool(const Element&, size_t)>;
   using ElementIterator = std::function<bool(const ElementCallback&)>;
 
   ElementIterator element_iterator;
@@ -1010,10 +1025,18 @@ bool EntityPass::OnRender(
          &translucent_clear_entity_count](const ElementCallback& callback) {
           const auto& sorted_elements = draw_order_resolver_.GetSortedDraws(
               opaque_clear_entity_count, translucent_clear_entity_count);
-
+          // Print all items in the sorted elements array
+          std::stringstream s;
+          s << '[';
+          for (const auto& element_ref : sorted_elements) {
+            // const Element& element = elements_[element_ref];
+            s << element_ref << " ";
+          }
+          s << ']';
+          FML_LOG(ERROR) << "Sorted elements: " << s.str();
           for (const auto& element_ref : sorted_elements) {
             const Element& element = elements_[element_ref];
-            if (!callback(element)) {
+            if (!callback(element, element_ref)) {
               return false;
             }
           }
@@ -1032,7 +1055,7 @@ bool EntityPass::OnRender(
           skips--;
           continue;
         }
-        if (!callback(element)) {
+        if (!callback(element, 0)) {
           return false;
         }
       }
@@ -1046,7 +1069,8 @@ bool EntityPass::OnRender(
   };
 
   std::optional<Entity> deferred_entity;
-  bool result = element_iterator([&](const Element& element) {
+  bool result = element_iterator([&](const Element& element, size_t index) {
+    FML_LOG(ERROR) << "====INDEX====: " << index;
     EntityResult result =
         GetEntityForElement(element,               // element
                             renderer,              // renderer
@@ -1068,23 +1092,35 @@ bool EntityPass::OnRender(
         return true;
     };
 
-    if (deferred_entity.has_value() &&
-        result.entity.GetBlendMode() != BlendMode::kSource) {
-      if (!render_element(*deferred_entity)) {
-        return false;
-      }
-      deferred_entity.reset();
-    }
-
-    if (IsSubpass(element)) {
-      if (deferred_entity.has_value()) {
-        if (!render_element(*deferred_entity)) {
-          return false;
-        }
-      }
-      deferred_entity = std::move(result.entity);
-      return true;
-    }
+    // if (deferred_entity.has_value()) {
+    //   bool next_is_subpass = IsSubpass(element);
+    //   bool next_is_opaque = result.entity.GetBlendMode() ==
+    //   BlendMode::kSource; bool next_is_clip =
+    //   result.entity.GetClipCoverage(std::nullopt).type !=
+    //                       Contents::ClipCoverage::Type::kNoChange;
+    //   bool next_is_on_top =
+    //       deferred_entity->GetClipDepth() < result.entity.GetClipDepth();
+    //   bool should_draw_deferred =
+    //       next_is_subpass ||
+    //       ((next_is_clip || !next_is_opaque) && next_is_on_top);
+    //
+    //  if (should_draw_deferred) {
+    //    if (!render_element(*deferred_entity)) {
+    //      return false;
+    //    }
+    //    deferred_entity.reset();
+    //  }
+    //}
+    //
+    // if (IsSubpass(element)) {
+    //  if (deferred_entity.has_value()) {
+    //    if (!render_element(*deferred_entity)) {
+    //      return false;
+    //    }
+    //  }
+    //  deferred_entity = std::move(result.entity);
+    //  return true;
+    //}
 
     return render_element(result.entity);
   });

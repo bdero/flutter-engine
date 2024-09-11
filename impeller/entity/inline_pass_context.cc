@@ -115,6 +115,8 @@ InlinePassContext::RenderPassResult InlinePassContext::GetRenderPass(
   command_buffer_->SetLabel(
       "EntityPass Command Buffer: Depth=" + std::to_string(pass_depth) +
       " Count=" + std::to_string(pass_count_));
+  FML_LOG(ERROR) << "EntityPass Command Buffer: Depth=" << pass_depth
+                 << " Count=" << pass_count_;
 
   RenderPassResult result;
   {

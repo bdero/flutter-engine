@@ -224,21 +224,24 @@ bool Canvas::Restore() {
   if (transform_stack_.size() == 1) {
     return false;
   }
-  size_t num_clips = transform_stack_.back().num_clips;
-  current_pass_->PopClips(num_clips, current_depth_);
 
-  if (transform_stack_.back().rendering_mode ==
+  bool is_subpass =
+      transform_stack_.back().rendering_mode ==
           Entity::RenderingMode::kSubpassAppendSnapshotTransform ||
       transform_stack_.back().rendering_mode ==
-          Entity::RenderingMode::kSubpassPrependSnapshotTransform) {
-    current_pass_->SetClipDepth(++current_depth_);
-    current_pass_ = GetCurrentPass().GetSuperpass();
-    FML_DCHECK(current_pass_);
-  }
+          Entity::RenderingMode::kSubpassPrependSnapshotTransform;
+  size_t num_clips = transform_stack_.back().num_clips;
 
   transform_stack_.pop_back();
   if (num_clips > 0) {
     RestoreClip();
+  }
+  current_pass_->PopClips(num_clips, current_depth_);
+
+  if (is_subpass) {
+    current_pass_->SetClipDepth(++current_depth_);
+    current_pass_ = GetCurrentPass().GetSuperpass();
+    FML_DCHECK(current_pass_);
   }
 
   return true;

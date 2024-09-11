@@ -65,6 +65,9 @@ EntityPassClipStack::ClipStateResult EntityPassClipStack::ApplyClipState(
       break;
     case Contents::ClipCoverage::Type::kAppend: {
       auto maybe_coverage = CurrentClipCoverage();
+      FML_LOG(ERROR) << "    Append clip: "
+                     << subpass_state.clip_coverage.back().clip_height << " -> "
+                     << subpass_state.clip_coverage.back().clip_height + 1;
 
       // Compute the previous clip height.
       size_t previous_clip_height = 0;
@@ -108,11 +111,14 @@ EntityPassClipStack::ClipStateResult EntityPassClipStack::ApplyClipState(
       ClipRestoreContents* restore_contents =
           reinterpret_cast<ClipRestoreContents*>(entity.GetContents().get());
       size_t restore_height = restore_contents->GetRestoreHeight();
+      FML_LOG(ERROR) << "    Restore clip: "
+                     << subpass_state.clip_coverage.back().clip_height << " -> "
+                     << restore_height;
 
-      if (subpass_state.clip_coverage.back().clip_height <= restore_height) {
-        // Drop clip restores that will do nothing.
-        return result;
-      }
+      // if (subpass_state.clip_coverage.back().clip_height <= restore_height) {
+      //   // Drop clip restores that will do nothing.
+      //   return result;
+      // }
 
       auto restoration_index =
           restore_height - subpass_state.clip_coverage.front().clip_height;
@@ -132,9 +138,9 @@ EntityPassClipStack::ClipStateResult EntityPassClipStack::ApplyClipState(
       result.clip_did_change = true;
 
       // Skip all clip restores when stencil-then-cover is enabled.
-      if (subpass_state.clip_coverage.back().coverage.has_value()) {
-        RecordEntity(entity, global_clip_coverage.type, Rect());
-      }
+      // if (subpass_state.clip_coverage.back().coverage.has_value()) {
+      RecordEntity(entity, global_clip_coverage.type, Rect());
+      //}
       return result;
 
     } break;
@@ -199,7 +205,7 @@ EntityPassClipStack::GetNextReplayResult(size_t current_clip_depth) {
   }
   ReplayResult* next_replay =
       &subpass_state_.back().rendered_clip_entities[next_replay_index_];
-  if (next_replay->entity.GetClipDepth() < current_clip_depth) {
+  if (next_replay->entity.GetClipDepth() <= current_clip_depth) {
     // The next replay clip doesn't affect the current entity, so don't replay
     // it yet.
     return nullptr;

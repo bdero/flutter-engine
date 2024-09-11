@@ -58,6 +58,16 @@ class EntityPassClipStack {
                                  Point global_pass_position);
 
   // Visible for testing.
+  /// @brief Adds and removes Entities from the clip replay stack for the
+  ///        current subpass.
+  ///        Specifically: `GetCurrentSubpassState().rendered_clip_entities`.
+  ///
+  ///        This "clip replay stack" tracks the exact list of unsurpassed clip
+  ///        entities that would be need to be rendered in order to continue
+  ///        drawing subsequent entities correctly.
+  ///
+  ///        We need to "replay" these clips after a backdrop restore, since the
+  ///        depth buffer is DeviceTransient/not saved between render passes.
   void RecordEntity(const Entity& entity,
                     Contents::ClipCoverage::Type type,
                     std::optional<Rect> clip_coverage);

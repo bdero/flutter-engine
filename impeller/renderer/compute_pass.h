@@ -14,6 +14,9 @@
 
 namespace impeller {
 
+template <typename T>
+class PipelineFuture;
+
 //------------------------------------------------------------------------------
 /// @brief      Compute passes encode compute shader into the underlying command
 ///             buffer.
@@ -31,7 +34,7 @@ class ComputePass : public ResourceBinder {
   virtual void SetCommandLabel(std::string_view label) = 0;
 
   virtual void SetPipeline(
-      const std::shared_ptr<Pipeline<ComputePipelineDescriptor>>& pipeline) = 0;
+      PipelineFuture<ComputePipelineDescriptor> pipeline) = 0;
 
   virtual fml::Status Compute(const ISize& grid_size) = 0;
 

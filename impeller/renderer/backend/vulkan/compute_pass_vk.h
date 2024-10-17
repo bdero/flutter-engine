@@ -8,6 +8,7 @@
 #include "impeller/renderer/backend/vulkan/pipeline_vk.h"
 #include "impeller/renderer/backend/vulkan/vk.h"
 #include "impeller/renderer/compute_pass.h"
+#include "impeller/renderer/compute_pipeline_descriptor.h"
 
 namespace impeller {
 
@@ -55,8 +56,7 @@ class ComputePassVK final : public ComputePass {
   void SetCommandLabel(std::string_view label) override;
 
   // |ComputePass|
-  void SetPipeline(const std::shared_ptr<Pipeline<ComputePipelineDescriptor>>&
-                       pipeline) override;
+  void SetPipeline(PipelineFuture<ComputePipelineDescriptor> pipeline) override;
 
   // |ComputePass|
   void AddBufferMemoryBarrier() override;

@@ -9,6 +9,7 @@
 
 #include "impeller/renderer/backend/metal/compute_pass_bindings_cache_mtl.h"
 #include "impeller/renderer/compute_pass.h"
+#include "impeller/renderer/compute_pipeline_descriptor.h"
 #include "impeller/renderer/pipeline_descriptor.h"
 
 namespace impeller {
@@ -44,8 +45,7 @@ class ComputePassMTL final : public ComputePass {
   void OnSetLabel(const std::string& label) override;
 
   // |ComputePass|
-  void SetPipeline(const std::shared_ptr<Pipeline<ComputePipelineDescriptor>>&
-                       pipeline) override;
+  void SetPipeline(PipelineFuture<ComputePipelineDescriptor> pipeline) override;
 
   // |ComputePass|
   bool BindResource(ShaderStage stage,
